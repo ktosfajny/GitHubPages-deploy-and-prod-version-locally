@@ -1,0 +1,92 @@
+(tym sposobem przeœlesz jednoczeœnie wersjê developersk¹ i produkcyjn¹ na 2 ró¿nych branchach na GH i GH-P)
+1 - tworzysz repo na GitHub
+2 - podpinasz zdalne repo i pushujesz swoj¹  wersjê developersk¹ na GitHub
+3 - npm install gh-pages		(mo¿esz te¿ napisaæ 'npm install --save gh-pages' co robi to samo tyle ¿e zostanie dodane w podobiekcie 'dependencies' z pliku package.json czyli ¿e zostanie automatycznie zainstalowane jeœli potem z tego bêdziesz chcial robiæ npm install i fetchowac npm_modules zeby uruchomic wersjê developersk¹)
+4 - ustawiasz Live podgl¹d na GitHub Pages na to repo na które dopiero co spuszowa³eœ swój projekt w wersji developerskiej
+5 - w package.json w g³ównym obiekcie tworzysz now¹ w³asciwoœæ (najlepiej na samym pocz¹tku, przed innymi):	
+	"homepage": "https://ktosfajny.github.io/app/",		(jak dodasz projekt na GH i ustawisz jego live na GH-P to on daje ci ten link pod którym jest podgl¹d, to ten link wlasnie z live na GH-P)
+
+6 - w podobiekcie 'scripts'  dodajesz:
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build",
+
+teraz po wpisaniu 'npm run deploy' zostanie utworzony w folderze lokalnie folder build z wersj¹ prodykcyjn¹ oraz do repo na GH zostanie dodana nowa ga³¹Ÿ z t¹ wersj¹ prodykcyjn¹ (bêdziesz mia³ wtedy 2 ga³êzie bo jeszcze ta pierwsza, developerska).
+ta nowa ga³¹Ÿ zawieraj¹ca build nazywa siê gh-pages
+
+7 - wchodzisz na GitHub i w Settings w Git Hub Pages zmieniasz ga³¹Ÿ która ma byæ linkiem do GH-P z ga³êzi master na t¹ gh-pages
+
+
+	w ten sposób utworzony katalog build jest zoptymalizowany pod link z GH-P. 
+
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+jeœli umieszczasz plik wykorzystujacy React Router to robisz te same kroki a oprócz tego robisz jeszcze:
+
+8 - przechodzisz do pliku g³ównego w którym jest BrowserRouter (zwykle jest to App.js i BrowserRouter jest as Router) i dodajesz mu atrybut basename={process.env.PUBLIC_URL}  czyli ca³oœæ:  <Router basename={process.env.PUBLIC_URL}>
+9 - znowu uruchamiasz npm run deploy  		(nie trzeba po drodze dodaæ komita bo jak tworzysz build'a  to zawsze tworzy siê z aktualnej wersji z tego co jest w folderze, niezaleznie od git'a - oczywiœcie mo¿na skomitowaæ i spushowaæ na zdaln¹ ga³¹Ÿ master - wtedy dodajesz do indexu, robisz komit i potem "git push")
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------------------------------------------------------------------------------------------------------------
+//''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+(tym sposobem przeœlesz jedynie wersjê produkcyjn¹)
+
+1 - tworzysz repo na GitHub
+2 - pod³¹czasz zdalne repo z GH do twojego gita  ale nie pushujesz jeszcze  (git bash)
+3 - npm install gh-pages (cmd/powershell)		
+
+4 - w podobiekcie 'scripts'  z pliku package.json dodajesz:
+"predeploy": "npm run build",
+"deploy": "gh-pages -d build",
+
+
+5  - npm run deploy	 (cmd/powershell)   	(w tym momencie utworzy³eœ folder buid w twoim lokalnym projekcie oraz jednoczesnie spushowales ten projekt na GH wiec mozesz teraz ustawic go na GitHub Pages)
+	jak ustawisz GitHub Pages to dostaniesz link pod którym bedzie twoja aplikacja (nieco inny link ni¿ to samego repo). Na ten poment na GH-P jest bia³a strona bo build nie zosta³ zbundlowany pod link z GH-P (nie poda³eœ go w package.json bo go jeszcze nie mia³eœ).
+6 - bierzesz link z GH-P i w pliku package.json dodajesz ten link z GH-P :  "homepage": "https://ktosfajny.github.io/wersjaBuildOnly2ndTake/",
+7 - npm run deploy  (jeszcze raz utworzysz build i wyslesz ale tym razem bedzie przygotowany pod link pod którym bedzie na GH-P wiêc wszystkie pliki bêd¹ mia³y ju¿ odpowiednie linki)
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+jeœli umieszczasz plik wykorzystujacy React Router to robisz te same kroki a oprócz tego robisz jeszcze:
+
+8 - przechodzisz do pliku g³ównego w którym jest BrowserRouter (zwykle jest to App.js i BrowserRouter jest as Router) i dodajesz mu atrybut basename={process.env.PUBLIC_URL}  czyli ca³oœæ:  <Router basename={process.env.PUBLIC_URL}>
+9 - znowu uruchamiasz npm run deploy  		(nie trzeba po drodze dodaæ komita bo jak tworzysz build'a  to zawsze tworzy siê z aktualnej wersji z tego co jest w folderze, niezaleznie od git'a - oczywiœcie mo¿na skomitowaæ i spushowaæ na zdaln¹ ga³¹Ÿ master - wtedy dodajesz do indexu, robisz komit i potem "git push")
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+//----------
+
+alternatywa  (bez zbêdnego 1 pusha, od razu za 1 razem wszystko ustawiasz - wymaga zmiany linku):
+
+1 - tworzysz repo na GitHub
+2 - pod³¹czasz to repo ale nie pushujesz jeszcze
+3 - npm install gh-pages (cmd/powershell)
+4 - w podobiekcie 'scripts'  z pliku package.json dodajesz:
+	"predeploy": "npm run build",
+	"deploy": "gh-pages -d build",
+5 - bierzesz link z GH z repo do którego pushujesz (np z wyszukiwarki albo tam gdzie s¹ komendy do pod³¹czenia repo przez push, bierzesz ten link tylko bez koñcóki .git ) 
+       	i teraz zmieniasz ten link, za³ó¿my ¿e masz link do repo: 
+	https://github.com/ktosfajny/wersjaBuildOnly2ndTake     	<---kopiujesz czêœæ oznaczaj¹c¹ twoje konto:     ktosfajny/      i wklejasz po http://  czyli masz:
+       	https://ktosfajny/github.com/wersjaBuildOnly2ndTake	<--- teraz zmienasz .com na .io i otrzymujesz:			( ewentualnie dodajesz / na koñcu ale to nie jest wymagane)
+	https://ktosfajny/github.io/wersjaBuildOnly2ndTake/	<--- teraz / oddzielaj¹cy ktoœfajny/github.io zamieniasz na kropkê i masz:
+                    https://ktosfajny.github.io/wersjaBuildOnly2ndTake/
+
+ ten nowy link wklejasz w plik package.json na pocz¹tku:           
+ "homepage": "https://ktosfajny.github.io/wersjaBuildOnly2ndTake/",
+
+//------------------------------------------------------------------------------------------------------------------------------------------------------------------
+jeœli umieszczasz plik wykorzystujacy React Router to robisz te same kroki a oprócz tego robisz jeszcze:
+
+6 - przechodzisz do pliku g³ównego w którym jest BrowserRouter (zwykle jest to App.js i BrowserRouter jest as Router) i dodajesz mu atrybut basename={process.env.PUBLIC_URL}  czyli ca³oœæ:  <Router basename={process.env.PUBLIC_URL}>
+7 - uruchamiasz npm run deploy  		(nie trzeba po drodze dodaæ komita bo jak tworzysz build'a  to zawsze tworzy siê z aktualnej wersji z tego co jest w folderze, niezaleznie od git'a - oczywiœcie mo¿na skomitowaæ i spushowaæ na zdaln¹ ga³¹Ÿ master - wtedy dodajesz do indexu, robisz komit i potem "git push")
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6 - npm run deploy
+

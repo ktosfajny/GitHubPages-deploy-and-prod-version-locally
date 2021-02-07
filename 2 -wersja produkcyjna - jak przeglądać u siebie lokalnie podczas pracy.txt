@@ -1,0 +1,29 @@
+(rzeczy tutaj opisane s¹ po to aby podjerzeæ wersjê produkcyjn¹ aplikacji)
+
+1 - uruchamiasz npm run biuld
+
+	( utworzy siê folder build, potem aby zobaczyæ to teoretycznie mo¿esz otworzyæ go w exploratorze windows i klikn¹æ na index.html ale bêdzie pusta strona. Aby to dzia³a³o przechodzisz do index.html i usuwasz slesze '/' i inne czêsci linków aby by³y dobre odniesienia ze wszystkich linków)
+
+2 - npm install -g serve
+3 - serve -s build	<-- otworzy ci tak ajkby localhosta na którym mo¿esz podejrzeæ wersjê z builda
+
+
+
+
+________________________________________________________________________________________________________
+jakby nie chcia³o pójœæ to mo¿esz za ka¿dym razem daæ jednorazowe pozwolenie, wpisujesz:
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned
+i potem znowu serve -s build
+
+
+lub w³¹casz na stale pozwolenia na tego typu rzeczy:  	ze strony: https://superuser.com/questions/106360/how-to-enable-execution-of-powershell-scripts
+1 - Start Windows PowerShell with the "Run as Administrator" option. Only members of the Administrators group on the computer can change the execution policy.
+2 -  Enable running unsigned scripts by entering:
+
+    set-executionpolicy remotesigned
+______________________________________________________________________________________________________
+
+
+jak chcesz wprowadziæ zmiany to wychodzisz z tego servera ctrl + c, potem:
+npm run build		<--- znowu robisz build
+serve -s build
